@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     // Use TestNG framework, also requires calling test.useTestNG() below
+    implementation("commons-io:commons-io:2.15.1")
     testImplementation("org.testng:testng:7.5")
 }
 
@@ -30,7 +31,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("com.pauldaniv.file.metadata.App")
+    mainClass.set("com.pauldaniv.file.metadata.Main")
 }
 
 tasks.named<Test>("test") {
