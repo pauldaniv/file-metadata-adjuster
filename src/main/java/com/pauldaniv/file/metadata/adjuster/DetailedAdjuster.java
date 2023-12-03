@@ -8,7 +8,7 @@ public class DetailedAdjuster implements Adjuster {
 
 
     @Override
-    public void adjust(String inputFile, String outputDir) throws IOException {
+    public void adjust(String inputFile, String outputDir) {
 
     }
 }

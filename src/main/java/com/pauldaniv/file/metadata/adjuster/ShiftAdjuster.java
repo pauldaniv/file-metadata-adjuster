@@ -15,19 +15,23 @@ import java.time.temporal.ChronoUnit;
 
 public class ShiftAdjuster implements Adjuster {
 
-    public void adjust(String inputFileName, String outputDir) throws IOException {
-        final String name = FilenameUtils.getName(inputFileName);
-        final Path inputFile = Paths.get(inputFileName);
-        final BasicFileAttributes attr = Files.readAttributes(inputFile, BasicFileAttributes.class);
-        final Instant lastModified = attr.lastModifiedTime().toInstant();
+    public void adjust(String inputFileName, String outputDir)  {
+        try {
+            final String name = FilenameUtils.getName(inputFileName);
+            final Path inputFile = Paths.get(inputFileName);
+            final BasicFileAttributes attr = Files.readAttributes(inputFile, BasicFileAttributes.class);
+            final Instant lastModified = attr.lastModifiedTime().toInstant();
 
-        final String outputFile = "%s/%s".formatted(outputDir, name);
-        FileUtils.copyFile(
-                FileUtils.getFile(inputFileName),
-                FileUtils.getFile(outputFile));
+            final String outputFile = "%s/%s".formatted(outputDir, name);
+            FileUtils.copyFile(
+                    FileUtils.getFile(inputFileName),
+                    FileUtils.getFile(outputFile));
 
-        final Instant newLastModified = lastModified.atZone(ZoneId.systemDefault()).plusYears(2).toInstant();
-        // convert LocalDate to instant, need time zone
-        Files.setLastModifiedTime(Paths.get(outputFile), FileTime.from(newLastModified));
+            final Instant newLastModified = lastModified.atZone(ZoneId.systemDefault()).plusYears(2).toInstant();
+            // convert LocalDate to instant, need time zone
+            Files.setLastModifiedTime(Paths.get(outputFile), FileTime.from(newLastModified));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
